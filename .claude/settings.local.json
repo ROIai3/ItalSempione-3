@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gcloud projects list --filter=\"name~ItalSempione\")",
+      "Bash(gcloud projects list)",
+      "Bash(gcloud projects create italsempione-scraping --name=\"ItalSempione-scraping-list\")",
+      "Bash(gcloud config set project italsempione-scraping)",
+      "Bash(gcloud services enable compute.googleapis.com --project=italsempione-scraping)",
+      "Bash(gcloud projects list --filter=\"project_id~italsempione\")",
+      "Bash(gcloud billing accounts list)",
+      "Bash(gcloud billing projects link italsempione-scraping --billing-account=01FF15-68CD51-C43B8E)",
+      "Bash(gcloud compute instances create italsempione-prod --project=italsempione-scraping --zone=europe-west8-b --machine-type=e2-medium --image-family=ubuntu-2204-lts --image-project=ubuntu-os-cloud --boot-disk-size=30GB --boot-disk-type=pd-balanced --tags=http-server,https-server --metadata=startup-script='#!/bin/bash:*)",
+      "Bash(gcloud compute firewall-rules create allow-http --project=italsempione-scraping --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --target-tags=http-server)",
+      "Bash(gcloud compute firewall-rules create allow-https --project=italsempione-scraping --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:443 --target-tags=https-server)",
+      "Bash(gcloud compute ssh italsempione-prod --zone=europe-west8-b --project=italsempione-scraping --command=\"cat /tmp/startup-done 2>/dev/null || echo ''STARTUP IN PROGRESS...''\")",
+      "Bash(gcloud compute ssh italsempione-prod --zone=europe-west8-b --project=italsempione-scraping --command=\"cat /tmp/startup-done 2>/dev/null || echo ''STILL IN PROGRESS...''\")",
+      "Bash(git init)",
+      "Bash(git add -A)",
+      "Bash(git commit -m \"Initial commit: full shipping tracker platform:*)"
+    ]
+  }
+}
