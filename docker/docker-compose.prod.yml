@@ -49,8 +49,8 @@ services:
   # ── Backend (Node.js / Express) ───────────────────────────────────
   backend:
     build:
-      context: ../backend
-      dockerfile: ../docker/Dockerfile.backend
+      context: ./backend
+      dockerfile: ./docker/Dockerfile.backend
     restart: always
     environment:
       - NODE_ENV=production
@@ -69,8 +69,8 @@ services:
   # ── Frontend (React / Vite via Nginx) ─────────────────────────────
   frontend:
     build:
-      context: ../frontend
-      dockerfile: ../docker/Dockerfile.frontend
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile.frontend
     restart: always
     depends_on:
       - backend
