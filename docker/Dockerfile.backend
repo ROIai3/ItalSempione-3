@@ -19,7 +19,6 @@ FROM node:20-alpine AS production
 ENV NODE_ENV=production
 WORKDIR /app
 
-# Create non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 COPY package.json package-lock.json* ./
@@ -28,8 +27,6 @@ RUN npm ci --omit=dev && npm cache clean --force
 # Copy compiled output and supporting files
 COPY --from=builder /app/dist/ dist/
 COPY --from=builder /app/migrations/ migrations/
-COPY --from=builder /app/seeds/ seeds/
-COPY knexfile.ts ./
 
 # Create uploads directory with correct ownership
 RUN mkdir -p uploads && chown -R appuser:appgroup /app

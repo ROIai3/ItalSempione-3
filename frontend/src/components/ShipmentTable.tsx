@@ -1,5 +1,6 @@
 import StatusBadge from './StatusBadge';
 import EtaIndicator from './EtaIndicator';
+import { Trash2, RefreshCw } from 'lucide-react';
 
 interface Shipment {
   id: string;
@@ -14,7 +15,12 @@ interface Shipment {
 
 interface Props {
   shipments: Shipment[];
+  selectedIds?: string[];
+  onToggleSelect?: (id: string) => void;
+  onSelectAll?: (ids: string[], isChecked: boolean) => void;
   onRowClick?: (id: string) => void;
+  onDeleteSingle?: (id: string) => void;
+  onTrackSingle?: (id: string) => void;
   loading?: boolean;
 }
 
@@ -34,14 +40,33 @@ const checkStatusStyle: Record<string, string> = {
   pending: 'text-slate-400',
 };
 
-export default function ShipmentTable({ shipments, onRowClick, loading }: Props) {
+export default function ShipmentTable({ 
+  shipments, 
+  selectedIds = [], 
+  onToggleSelect, 
+  onSelectAll, 
+  onRowClick, 
+  onDeleteSingle, 
+  onTrackSingle, 
+  loading 
+}: Props) {
+  const isAllSelected = shipments.length > 0 && shipments.every(s => selectedIds.includes(s.id));
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onSelectAll) {
+      onSelectAll(shipments.map(s => s.id), e.target.checked);
+    }
+  };
   if (loading) {
     return (
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
-              {['MBL', 'Carrier', 'Status', 'ETA', 'Last Check', 'Check'].map((h) => (
+              <th className="px-4 py-3 w-10">
+                <input type="checkbox" className="rounded border-slate-300" disabled />
+              </th>
+              {['MBL', 'Carrier', 'Status', 'ETA', 'Last Check', 'Check', 'Actions'].map((h) => (
                 <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                   {h}
                 </th>
@@ -51,7 +76,7 @@ export default function ShipmentTable({ shipments, onRowClick, loading }: Props)
           <tbody className="divide-y divide-slate-100">
             {Array.from({ length: 5 }).map((_, i) => (
               <tr key={i}>
-                {Array.from({ length: 6 }).map((_, j) => (
+                {Array.from({ length: 8 }).map((_, j) => (
                   <td key={j} className="px-4 py-3">
                     <div className="h-4 bg-slate-200 rounded animate-pulse w-24" />
                   </td>
@@ -77,7 +102,15 @@ export default function ShipmentTable({ shipments, onRowClick, loading }: Props)
       <table className="min-w-full divide-y divide-slate-200">
         <thead className="bg-slate-50">
           <tr>
-            {['MBL', 'Carrier', 'Status', 'ETA', 'Last Check', 'Check'].map((h) => (
+            <th className="px-4 py-3 w-10 text-left">
+              <input 
+                type="checkbox" 
+                checked={isAllSelected}
+                onChange={handleSelectAll}
+                className="rounded border-slate-300 w-4 h-4 cursor-pointer" 
+              />
+            </th>
+            {['MBL', 'Carrier', 'Status', 'ETA', 'Last Check', 'Check', 'Actions'].map((h) => (
               <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {h}
               </th>
@@ -88,18 +121,43 @@ export default function ShipmentTable({ shipments, onRowClick, loading }: Props)
           {shipments.map((s, i) => (
             <tr
               key={s.id}
-              onClick={() => onRowClick?.(s.id)}
-              className={`${onRowClick ? 'cursor-pointer hover:bg-blue-50' : ''} ${i % 2 === 1 ? 'bg-slate-50/50' : ''}`}
+              className={`${onRowClick ? 'hover:bg-blue-50' : ''} ${i % 2 === 1 ? 'bg-slate-50/50' : ''}`}
             >
-              <td className="px-4 py-3 text-sm font-mono font-medium text-slate-900">{s.mbl}</td>
-              <td className="px-4 py-3 text-sm text-slate-600">{s.carrier}</td>
-              <td className="px-4 py-3"><StatusBadge status={s.shipment_status} /></td>
-              <td className="px-4 py-3"><EtaIndicator eta={s.current_eta} etaChanged={s.eta_changed} /></td>
-              <td className="px-4 py-3 text-sm text-slate-500">{formatDate(s.last_check_date)}</td>
-              <td className="px-4 py-3 text-sm">
+              <td className="px-4 py-3">
+                <input 
+                  type="checkbox" 
+                  checked={selectedIds.includes(s.id)}
+                  onChange={() => onToggleSelect?.(s.id)}
+                  className="rounded border-slate-300 w-4 h-4 cursor-pointer" 
+                />
+              </td>
+              <td className="px-4 py-3 text-sm font-mono font-medium text-slate-900 cursor-pointer" onClick={() => onRowClick?.(s.id)}>{s.mbl}</td>
+              <td className="px-4 py-3 text-sm text-slate-600 cursor-pointer" onClick={() => onRowClick?.(s.id)}>{s.carrier}</td>
+              <td className="px-4 py-3 cursor-pointer" onClick={() => onRowClick?.(s.id)}><StatusBadge status={s.shipment_status} /></td>
+              <td className="px-4 py-3 cursor-pointer" onClick={() => onRowClick?.(s.id)}><EtaIndicator eta={s.current_eta} etaChanged={s.eta_changed} /></td>
+              <td className="px-4 py-3 text-sm text-slate-500 cursor-pointer" onClick={() => onRowClick?.(s.id)}>{formatDate(s.last_check_date)}</td>
+              <td className="px-4 py-3 text-sm cursor-pointer" onClick={() => onRowClick?.(s.id)}>
                 <span className={checkStatusStyle[s.check_status || 'pending'] || 'text-slate-400'}>
                   {s.check_status || '-'}
                 </span>
+              </td>
+              <td className="px-4 py-3 text-sm flex gap-2">
+                <button
+                  type="button"
+                  title="Check Tracking Now"
+                  onClick={() => onTrackSingle?.(s.id)}
+                  className="p-1 text-slate-400 hover:text-blue-600 rounded cursor-pointer"
+                >
+                  <RefreshCw size={18} />
+                </button>
+                <button
+                  type="button"
+                  title="Delete Shipment"
+                  onClick={() => onDeleteSingle?.(s.id)}
+                  className="p-1 text-slate-400 hover:text-red-500 rounded cursor-pointer"
+                >
+                  <Trash2 size={18} />
+                </button>
               </td>
             </tr>
           ))}

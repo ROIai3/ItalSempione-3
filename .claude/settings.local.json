@@ -16,7 +16,12 @@
       "Bash(gcloud compute ssh italsempione-prod --zone=europe-west8-b --project=italsempione-scraping --command=\"cat /tmp/startup-done 2>/dev/null || echo ''STILL IN PROGRESS...''\")",
       "Bash(git init)",
       "Bash(git add -A)",
-      "Bash(git commit -m \"Initial commit: full shipping tracker platform:*)"
+      "Bash(git commit -m \"Initial commit: full shipping tracker platform:*)",
+      "Bash(tar czf /tmp/italsempione.tar.gz --exclude='node_modules' --exclude='dist' --exclude='.git' .)",
+      "Read(//tmp/**)",
+      "Bash(gcloud compute scp /tmp/italsempione.tar.gz italsempione-prod:/tmp/italsempione.tar.gz --zone=europe-west8-b --project=italsempione-scraping)",
+      "Bash(gcloud compute ssh italsempione-prod --zone=europe-west8-b --project=italsempione-scraping --command=':*)",
+      "Bash(gh auth:*)"
     ]
   }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ShipmentTable from '../components/ShipmentTable';
 import Pagination from '../components/Pagination';
-import { getShipments } from '../services/api';
+import { getShipments, deleteShipment, deleteBulkShipments, triggerTracking } from '../services/api';
 
 const LIMIT = 25;
 
@@ -18,6 +18,7 @@ export default function ShipmentsPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [activeOnly, setActiveOnly] = useState(false);
   const [mblSearch, setMblSearch] = useState('');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -27,8 +28,9 @@ export default function ShipmentsPage() {
       if (activeOnly) params.is_active = true;
       if (mblSearch.trim()) params.mbl = mblSearch.trim();
       const res = await getShipments(params);
-      setShipments(res.data);
-      setTotal(res.total || 0);
+      setShipments(res.data?.shipments || []);
+      setTotal(res.data?.pagination?.total || 0);
+      setSelectedIds([]);
     } finally {
       setLoading(false);
     }
@@ -40,8 +42,66 @@ export default function ShipmentsPage() {
 
   const totalPages = Math.ceil(total / LIMIT) || 1;
 
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = (ids: string[], isChecked: boolean) => {
+    if (isChecked) {
+      const newIds = new Set([...selectedIds, ...ids]);
+      setSelectedIds(Array.from(newIds));
+    } else {
+      setSelectedIds(selectedIds.filter((id) => !ids.includes(id)));
+    }
+  };
+
+  const handleDeleteSingle = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this shipment?')) return;
+    try {
+      await deleteShipment(id);
+      fetchData();
+    } catch (err) {
+      alert('Error deleting shipment');
+    }
+  };
+
+  const handleDeleteBulk = async () => {
+    if (!selectedIds.length) return;
+    if (!window.confirm(`Delete ${selectedIds.length} shipments?`)) return;
+    try {
+      await deleteBulkShipments(selectedIds);
+      setSelectedIds([]);
+      fetchData();
+    } catch (err) {
+      alert('Error deleting shipments');
+    }
+  };
+
+  const handleTrackSingle = async (id: string) => {
+    try {
+      await triggerTracking(id);
+      fetchData();
+    } catch (err) {
+      alert('Error triggering tracking');
+    }
+  };
+
   return (
     <div className="space-y-4">
+      {selectedIds.length > 0 && (
+        <div className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <span className="text-blue-800 font-medium">{selectedIds.length} shipments selected</span>
+          <button 
+            type="button"
+            onClick={handleDeleteBulk}
+            className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 cursor-pointer"
+          >
+            Delete Selected
+          </button>
+        </div>
+      )}
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 bg-white rounded-xl border border-slate-200 p-4">
         <input
@@ -79,6 +139,11 @@ export default function ShipmentsPage() {
 
       <ShipmentTable
         shipments={shipments}
+        selectedIds={selectedIds}
+        onToggleSelect={handleToggleSelect}
+        onSelectAll={handleSelectAll}
+        onDeleteSingle={handleDeleteSingle}
+        onTrackSingle={handleTrackSingle}
         onRowClick={(id) => navigate(`/shipments/${id}`)}
         loading={loading}
       />

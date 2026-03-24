@@ -62,4 +62,23 @@ router.get('/stats', async (_req: Request, res: Response, next: NextFunction) =>
   }
 });
 
+/**
+ * POST /api/dashboard/reset
+ * Reset the entire tracking system (shipments and batches).
+ */
+router.post('/reset', async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Delete shipments first to satisfy FK from eta_history & tracking_log, then batches
+    await db('shipments').del();
+    await db('upload_batches').del();
+
+    res.json({
+      success: true,
+      message: 'System reset successfully',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

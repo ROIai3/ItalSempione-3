@@ -94,3 +94,18 @@ export async function getDashboardStats() {
   const { data } = await api.get('/dashboard/stats');
   return data.data;
 }
+
+export async function deleteShipment(id: string) {
+  const { data } = await api.delete(`/shipments/${id}`);
+  return data;
+}
+
+export async function deleteBulkShipments(ids: string[]) {
+  const { data } = await api.post('/shipments/delete-bulk', { ids });
+  return data;
+}
+
+export async function resetSystem() {
+  const { data } = await api.post('/dashboard/reset');
+  return data;
+}

@@ -158,4 +158,64 @@ router.patch('/:id', async (req: Request, res: Response, next: NextFunction) => 
   }
 });
 
+const bulkDeleteSchema = z.object({
+  ids: z.array(z.string().uuid()),
+});
+
+/**
+ * POST /api/shipments/delete-bulk
+ * Delete multiple shipments by ID.
+ */
+router.post('/delete-bulk', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const parsed = bulkDeleteSchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new AppError('Invalid request body, Expected array of current UUIDs', 400);
+    }
+
+    const { ids } = parsed.data;
+    if (ids.length === 0) {
+      res.json({ success: true, message: 'No records to delete' });
+      return;
+    }
+
+    const count = await db('shipments').whereIn('id', ids).del();
+
+    res.json({
+      success: true,
+      message: `Successfully deleted ${count} shipments`,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * DELETE /api/shipments/:id
+ * Delete a single shipment by ID.
+ */
+router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    
+    // Check if UUID is valid format
+    if (!z.string().uuid().safeParse(id).success) {
+      throw new AppError('Invalid ID format', 400);
+    }
+
+    const deleted = await db('shipments').where({ id }).del();
+    
+    if (!deleted) {
+      throw new AppError('Shipment not found', 404);
+    }
+
+    res.json({
+      success: true,
+      message: 'Shipment deleted successfully',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;
