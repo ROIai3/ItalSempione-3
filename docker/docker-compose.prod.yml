@@ -50,7 +50,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: ./docker/Dockerfile.backend
+      dockerfile: ../docker/Dockerfile.backend
     restart: always
     environment:
       - NODE_ENV=production
@@ -70,7 +70,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: ./docker/Dockerfile.frontend
+      dockerfile: ../docker/Dockerfile.frontend
     restart: always
     depends_on:
       - backend
