@@ -27,6 +27,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 # Copy compiled output and supporting files
 COPY --from=builder /app/dist/ dist/
 COPY --from=builder /app/migrations/ dist/migrations/
+RUN find dist -name "*.d.ts" -type f -delete && find dist -name "*.js.map" -type f -delete
 
 # Create uploads directory with correct ownership
 RUN mkdir -p uploads && chown -R appuser:appgroup /app
