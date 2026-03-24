@@ -69,12 +69,12 @@ echo "    PostgreSQL is ready."
 # ── Run database migrations ───────────────────────────────────────
 echo "==> Running database migrations..."
 docker compose -f "${COMPOSE_FILE}" --project-directory "${PROJECT_DIR}" \
-    exec -T backend npx knex migrate:latest --knexfile knexfile.ts
+    exec -T backend npx knex migrate:latest --knexfile dist/knexfile.js
 
 # ── Run database seeds ───────────────────────────────────────────
 echo "==> Running database seeds..."
 docker compose -f "${COMPOSE_FILE}" --project-directory "${PROJECT_DIR}" \
-    exec -T backend npx knex seed:run --knexfile knexfile.ts
+    exec -T backend npx knex seed:run --knexfile dist/knexfile.js
 
 # ── Print status ─────────────────────────────────────────────────
 echo ""
