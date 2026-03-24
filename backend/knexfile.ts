@@ -13,7 +13,6 @@ const config: Record<string, Knex.Config> = {
     },
     migrations: {
       directory: './migrations',
-      extension: 'sql',
     },
     seeds: {
       directory: './seeds',
@@ -29,7 +28,6 @@ const config: Record<string, Knex.Config> = {
     },
     migrations: {
       directory: './migrations',
-      extension: 'sql',
     },
     seeds: {
       directory: './seeds',
