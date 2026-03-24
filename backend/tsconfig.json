@@ -16,6 +16,6 @@
     "moduleResolution": "node",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*", "knexfile.ts", "seeds/**/*"],
+  "include": ["src/**/*", "knexfile.ts", "seeds/**/*", "migrations/**/*"],
   "exclude": ["node_modules", "dist"]
 }
