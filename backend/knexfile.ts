@@ -33,6 +33,7 @@ const config: Record<string, Knex.Config> = {
     },
     seeds: {
       directory: './seeds',
+      extension: 'js',
     },
   },
 };
