@@ -38,8 +38,8 @@ export default function Layout() {
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
-        <div className="flex items-center justify-center px-5 py-6 border-b border-white/10">
-          <img src="/Logo-Ingesta-white.svg" alt="Ingesta" className="h-16 max-w-full drop-shadow-sm" />
+        <div className="flex items-center justify-center px-2 py-6 border-b border-white/10">
+          <img src="/Logo-Ingesta-white.svg" alt="Ingesta" className="h-32 max-w-full drop-shadow-sm" />
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
