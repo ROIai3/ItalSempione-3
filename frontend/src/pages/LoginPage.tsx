@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Anchor } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export default function LoginPage() {
@@ -26,12 +25,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-slate-900 px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <Anchor className="w-12 h-12 text-blue-400 mx-auto mb-3" />
-          <h1 className="text-2xl font-bold text-white">ItalSempione</h1>
-          <p className="text-slate-400 text-sm mt-1">Shipping Tracker</p>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <img src="/src/assets/Logo-Ingesta.svg" alt="Ingesta" className="h-16 mb-4" />
+          <p className="text-slate-400 text-sm">Shipping Tracker</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-xl p-6 space-y-4">
@@ -65,7 +63,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="w-full py-2.5 bg-secondary text-white font-medium rounded-lg hover:opacity-90 disabled:opacity-50 transition-all shadow-md"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

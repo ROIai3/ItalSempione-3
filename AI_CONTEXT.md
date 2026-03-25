@@ -1,9 +1,9 @@
-# ItalSempione-3 AI Context
+# Ingesta AI Context
 
 Questo file serve come punto di riferimento (RAG testuale) per fornire contesto aggiornato agli assistenti AI che lavorano su questo repository.
 
 ## Panoramica del Progetto
-**ItalSempione-3** è un Tracker di Spedizioni Navali basato su un'architettura a servizi. È diviso in backend (Node.js/Express), frontend (React/Vite), orchestrazione di webhook/sfondi (n8n), e un database PostgreSQL. Il deploy è effettuato via Docker su una VM Google Cloud Compute Engine (`italsempione-prod` in `europe-west1-b`). L'URL di produzione è `http://scrape.italnexusflow.it/`.
+**Ingesta** è un Tracker di Spedizioni Navali basato su un'architettura a servizi. È diviso in backend (Node.js/Express), frontend (React/Vite), orchestrazione di webhook/sfondi (n8n), e un database PostgreSQL. Il deploy è effettuato via Docker su una VM Google Cloud Compute Engine (`italsempione-prod` in `europe-west1-b`). L'URL di produzione è `https://ingesta.italnexusflow.it/`.
 
 ## Stack Tecnologico
 * **Backend:** Node.js, Express, TypeScript, Knex.js (Query Builder/Migrazioni). Librerie principali: `xlsx` (parsing), `multer`, `zod`, `jsonwebtoken`, `bcryptjs`.

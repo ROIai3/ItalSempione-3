@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1200 1200">
+  <!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 26.34px;
+      }
+
+      .st0, .st1 {
+        stroke-miterlimit: 10;
+      }
+
+      .st1 {
+        fill: #e2710c;
+        stroke: #1d1d1b;
+      }
+
+      .st2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect class="st1" x="-1.37" y="-1.37" width="1201.13" height="1201.13"/>
+  <g>
+    <polygon class="st2" points="355.05 573.19 448.15 510.43 465.63 525.75 378.32 586.71 355.05 573.19"/>
+    <polygon class="st2" points="616.16 702.95 616.16 789.45 845.56 654.47 845.94 573.1 616.16 702.95"/>
+    <polygon class="st2" points="614.75 823.75 614.75 910.25 844.2 775.27 844.53 693.9 614.75 823.75"/>
+    <polygon class="st2" points="617.53 944.55 617.53 1031.06 846.98 896.07 847.31 814.7 617.53 944.55"/>
+    <polygon class="st2" points="583.89 703.84 583.89 790.39 354.44 655.41 354.11 574.04 583.89 703.84"/>
+    <polygon class="st2" points="585.25 824.65 585.25 911.2 355.85 776.21 355.47 694.84 585.25 824.65"/>
+    <polygon class="st2" points="582.47 945.45 582.47 1032 353.02 897.01 352.69 815.65 582.47 945.45"/>
+    <polygon class="st2" points="846.32 573.33 754.35 509.02 736.59 524.05 822.81 586.48 846.32 573.33"/>
+    <path class="st0" d="M687.78,443.2h58.23c10.27,0,12.72,5.94,5.47,13.19l-140.97,140.97c-7.26,7.26-19.13,7.26-26.38,0l-140.97-140.97c-7.26-7.26-4.81-13.19,5.47-13.19h58.23"/>
+    <line class="st0" x1="687.3" y1="456.3" x2="687.92" y2="296.11"/>
+    <line class="st0" x1="506.38" y1="191.13" x2="506.38" y2="456.3"/>
+    <rect class="st2" x="587.37" y="211.77" width="24.78" height="276.71"/>
+    <circle class="st2" cx="599.76" cy="193.4" r="25.4"/>
+    <circle class="st2" cx="599.76" cy="498.61" r="25.4"/>
+    <circle class="st2" cx="688.39" cy="281.55" r="25.4"/>
+  </g>
+</svg>

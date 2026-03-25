@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Anchor, LayoutDashboard, Ship, Upload, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Ship, Upload, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 const navItems = [
@@ -33,14 +33,13 @@ export default function Layout() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-40 w-60 bg-slate-800 text-white flex flex-col
+          fixed lg:static inset-y-0 left-0 z-40 w-60 bg-primary text-white flex flex-col
           transform transition-transform lg:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
-        <div className="flex items-center gap-3 px-5 py-5 border-b border-slate-700">
-          <Anchor className="w-7 h-7 text-blue-400" />
-          <span className="text-lg font-bold tracking-tight">ItalSempione</span>
+        <div className="flex items-center justify-center px-5 py-6 border-b border-white/10">
+          <img src="/src/assets/Logo-Ingesta.svg" alt="Ingesta" className="h-8 max-w-full" />
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
@@ -52,8 +51,8 @@ export default function Layout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-blue-600 text-white'
-                    : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                    ? 'bg-secondary text-white shadow-sm'
+                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
                 }`
               }
             >
@@ -66,7 +65,7 @@ export default function Layout() {
         <div className="px-3 pb-4">
           <button
             onClick={logout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-colors"
           >
             <LogOut className="w-5 h-5" />
             Logout
