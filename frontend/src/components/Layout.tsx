@@ -39,7 +39,7 @@ export default function Layout() {
         `}
       >
         <div className="flex items-center justify-center px-5 py-6 border-b border-white/10">
-          <img src="/Logo-Ingesta-square.svg" alt="Ingesta" className="h-12 max-w-full drop-shadow-sm" />
+          <img src="/Logo-Ingesta-white.svg" alt="Ingesta" className="h-16 max-w-full drop-shadow-sm" />
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
