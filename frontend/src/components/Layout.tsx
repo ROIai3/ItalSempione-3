@@ -33,13 +33,13 @@ export default function Layout() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-40 w-60 bg-primary text-white flex flex-col
+          fixed lg:static inset-y-0 left-0 z-40 w-60 bg-secondary text-white flex flex-col
           transform transition-transform lg:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         <div className="flex items-center justify-center px-5 py-6 border-b border-white/10">
-          <img src="/src/assets/Logo-Ingesta.svg" alt="Ingesta" className="h-8 max-w-full" />
+          <img src="/Logo-Ingesta.svg" alt="Ingesta" className="h-8 max-w-full drop-shadow-sm" />
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
@@ -49,10 +49,10 @@ export default function Layout() {
               to={to}
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold transition-colors ${
                   isActive
-                    ? 'bg-secondary text-white shadow-sm'
-                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-white/20 text-white shadow-sm'
+                    : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`
               }
             >
@@ -65,7 +65,7 @@ export default function Layout() {
         <div className="px-3 pb-4">
           <button
             onClick={logout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-bold text-white/80 hover:bg-white/10 hover:text-white transition-colors"
           >
             <LogOut className="w-5 h-5" />
             Logout
@@ -77,10 +77,10 @@ export default function Layout() {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <header className="bg-white border-b border-slate-200 px-4 lg:px-6 py-4 flex items-center gap-4">
-          <button className="lg:hidden text-slate-600" onClick={() => setSidebarOpen(true)}>
+          <button className="lg:hidden text-primary" onClick={() => setSidebarOpen(true)}>
             {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-          <h1 className="text-xl font-semibold text-slate-900">{title}</h1>
+          <h1 className="text-xl font-bold text-primary">{title}</h1>
         </header>
 
         {/* Content */}
