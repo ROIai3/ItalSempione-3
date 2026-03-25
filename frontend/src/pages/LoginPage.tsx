@@ -28,7 +28,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-secondary px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8 flex flex-col items-center">
-          <img src="/Logo-Ingesta.svg" alt="Ingesta" className="h-16 mb-4" />
+          <img src="/Logo-Ingesta-login-page.svg" alt="Ingesta" className="h-16 mb-4" />
           <p className="text-white/80 text-sm font-medium">Shipping Tracker</p>
         </div>
 
